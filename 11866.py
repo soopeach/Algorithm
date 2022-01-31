@@ -12,35 +12,19 @@ i = k-1
 while len(yos) < n :
 
     for _ in range(k) :
-        # 아직 제거 되지 않은 사람이라면
-        if check[i+1] == -1 :
+        i += 1
+        if i >= n:
+            i -= n
+        while check[i] != -1 :
             i += 1
-            if i >= n-1 :
-                i -= n-1
-        else :
-            while check[i+1] == 0 :
-                i += 1
-                if i >= n-1:
-                    i -= n-1
-
+            if i >= n:
+                i -= n
 
     yos.append(circle[i])
+
     check[i] = 0
 
-
-'''
-        if check[i+1] == -1 :
-            i += 1
-        else :
-            i += 2
-            '''
-
-
-
-
-
-
-
-
-
-print(yos)
+print("<", end="")
+for i in range(n-1):
+    print(yos[i], end=", ")
+print(str(yos[-1])+">")
