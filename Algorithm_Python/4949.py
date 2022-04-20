@@ -18,7 +18,7 @@ while True :
             rem.append(i + 1)
 
 
-    if test == "" :
+    if test:
         print("yes")
     else :
         print("no")
