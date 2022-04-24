@@ -1,16 +1,20 @@
 import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.io.InputStreamReader
+import java.io.OutputStreamWriter
 import java.util.*
 
 fun main() {
 
     // 빠른 입출력
     val br = BufferedReader(InputStreamReader(System.`in`))
+    val bw = BufferedWriter(OutputStreamWriter(System.out))
     var queue : MutableList<Pair<Int, Boolean>>
 
     // 테스트 케이스만큼 반복
     repeat(br.readLine().toInt()) {
-        queue = mutableListOf<Pair<Int, Boolean>>()
+        // MutableList 초기화
+        queue = mutableListOf()
         // [0] 문서의 개수, [1] 몇 번째로 인쇄되었는지 궁금한 문서의 현재 Queue에서의 위치
         val inform = br.readLine().split(" ")
         val doc = br.readLine().split(" ")
@@ -22,10 +26,12 @@ fun main() {
             else queue.add(Pair(doc.toInt(), false))
         }
 
-        println(countPrint(queue))
+        bw.write("${ countPrint(queue) }\n")
 
     }
 
+    bw.flush()
+    bw.close()
 
 }
 
