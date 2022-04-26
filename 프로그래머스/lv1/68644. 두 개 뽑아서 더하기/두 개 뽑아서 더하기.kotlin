@@ -7,11 +7,11 @@ class Solution {
         for (i in 0 ..numbers.size-1){
             for(j in i+1 .. numbers.size-1){
                 plus = numbers[i] + numbers[j]
-                answer.find{it == plus}?: answer.add(plus)
+                answer.add(plus)
             }
         }
         answer.sort()
     
-        return answer
+        return answer.distinct().toMutableList()
     }
 }
