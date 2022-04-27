@@ -1,0 +1,31 @@
+class Solution {
+    fun solution(n: Int): Int {
+        var answer: Int = 0
+        var trit = makeReverseTrit(n) 
+        
+        trit.reversed().forEachIndexed{index, no ->
+            answer += threeToThePowerOfN(index) * (no - '0')
+        }
+        
+        return answer
+    }
+    
+    // 10진법으로 표현한 수를 입력 받으면 앞뒤 반전된 3진법으로 표현하여 리턴
+    fun makeReverseTrit(decimal : Int) : String{
+        var trit = ""
+        var n = decimal
+        while(n > 0){
+            trit += n % 3
+            n /= 3
+        }
+        return trit // 0021
+    }
+    // 3의 n제곱을 반환해줌.
+    fun threeToThePowerOfN(n : Int) : Int{
+        var ans = 1
+        // 3의 0제곱은 1
+        if (n == 0) return 1
+        repeat(n){ans *= 3}
+        return ans
+    }
+}
