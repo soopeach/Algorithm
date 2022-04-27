@@ -4,15 +4,11 @@ class Solution {
         answer = intArrayOf(7-maxRank(lottos,win_nums),7-minRank(lottos,win_nums))
         return answer
     }
-    
-    
     fun maxRank(lottos : IntArray, win_nums : IntArray) : Int {
         var cnt = 0
-        
         lottos.forEach{ lotto ->
             if(lotto == 0) cnt++
             else win_nums.find{it.equals(lotto)}?.let{cnt++}
-            
         }
         if (cnt < 1) cnt = 1
         return cnt
