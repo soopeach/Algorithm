@@ -1,0 +1,12 @@
+class Solution {
+    fun solution(absolutes: IntArray, signs: BooleanArray): Int {
+        var answer = 0
+        
+        absolutes.forEachIndexed{index, no ->
+            if(signs[index] == true) answer += no
+            else if(signs[index] == false) answer -= no
+            
+        }
+        return answer
+    }
+}
