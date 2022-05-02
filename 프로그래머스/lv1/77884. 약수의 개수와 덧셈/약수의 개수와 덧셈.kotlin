@@ -3,29 +3,11 @@ class Solution {
         var answer: Int = 0
         
         for(target in left .. right){
-            if(getDivisor(target)) answer += target
-            else answer -= target
+            for (check in 1 .. target){
+                if(check * check == target) answer -= target * 2
+            }
+            answer += target
         }
         return answer
-    }
-    
-    fun getDivisor(target : Int) : Boolean{
-        var cnt = 0
-        val list = mutableListOf<Int>()
-        
-        for(no in 1.. target){
-            if (target % no == 0 && list.find{it == target / no} == null ){
-                 if(no != target / no) {
-                     list.add(no)
-                     list.add(target / no)
-                     cnt += 2
-                 } else {
-                     list.add(no)
-                     cnt++
-                 }
-            }
-        }
-        if(cnt % 2 == 0) return true 
-        return false
     }
 }
