@@ -1,22 +1,9 @@
 class Solution {
     fun solution(n: Int): String {
         var answer = ""
-        
-        if (n % 2 == 0) {
-            answer = returnWatermelon(n / 2)
-        } else {
-            answer = returnWatermelon(n / 2) + "수"
-        }
+        answer = "수박".repeat(n / 2) + if(n % 2 != 0) "수" else ""
         return answer
     }
-    fun returnWatermelon(n : Int) : String{
-        val watermelon = "수박"
-        var ans = ""
-        repeat(n){
-            ans += watermelon
-        }
-        return ans
-        
-    }
+    
 
 }
