@@ -1,48 +1,70 @@
+import java.util.*
 class Solution {
     fun solution(board: Array<IntArray>, moves: IntArray): Int {
         var answer = 0
-        val newList = mutableListOf<ArrayList<Int>>()
-        val basket = mutableListOf<Int>()
+        // 다른 사람의 풀이로 푼 코드... stack을 사용할 생각은 했었지만 이렇게 간단하게 할 수 있을 줄은 몰랐다..
+        val stack = Stack<Int>()
 
-        // newList에 보기 좋게 새로 리스트를 만들었음.
-        for (i in 0 until board.size){
-            val tempList= arrayListOf<Int>()
-            for (j in board.size-1 downTo 0){
-                tempList.add(board[j][i])
-            }
-            newList.add(tempList)
-
-        }
-
-        // 0 다 삭제
-        newList.forEach {
-            it.removeAll(listOf(0))
-
-        }
-
-
-        moves.forEach {
-            // 비어있으면 건너뛰기
-            if (newList[it-1].isNullOrEmpty()) return@forEach
-
-            // 인형 뽑기
-            val doll = newList[it-1][newList[it-1].size-1]
-            newList[it-1][newList[it-1].size-1] = 0
-            basket.add(doll)
-            for (i in 0 until basket.size-1){
-                if (basket[i] == basket[i+1]) {
-                    basket.removeAt(i+1)
-                    basket.removeAt(i)
-                    answer+=2
+            moves.forEach {
+                for (i in board.indices){
+                    if (board[i][it-1] != 0){
+                        if (stack.isNotEmpty() && stack.peek() == board[i][it-1]){
+                            answer+=2
+                            stack.pop()
+                        } else{
+                            stack.push(board[i][it-1])
+                        }
+                        board[i][it-1] = 0
+                        break
+                    }
                 }
             }
 
-            newList.forEach {
-                it.removeAll(listOf(0))
-
-            }
-
-        }
+            print(answer)
         return answer
     }
 }
+
+// 혼자 풀었던 코드. 그냥 구현...
+//         val newList = mutableListOf<ArrayList<Int>>()
+//         val basket = mutableListOf<Int>()
+
+//         // newList에 보기 좋게 새로 리스트를 만들었음.
+//         for (i in 0 until board.size){
+//             val tempList= arrayListOf<Int>()
+//             for (j in board.size-1 downTo 0){
+//                 tempList.add(board[j][i])
+//             }
+//             newList.add(tempList)
+
+//         }
+
+//         // 0 다 삭제
+//         newList.forEach {
+//             it.removeAll(listOf(0))
+
+//         }
+
+
+//         moves.forEach {
+//             // 비어있으면 건너뛰기
+//             if (newList[it-1].isNullOrEmpty()) return@forEach
+
+//             // 인형 뽑기
+//             val doll = newList[it-1][newList[it-1].size-1]
+//             newList[it-1][newList[it-1].size-1] = 0
+//             basket.add(doll)
+//             for (i in 0 until basket.size-1){
+//                 if (basket[i] == basket[i+1]) {
+//                     basket.removeAt(i+1)
+//                     basket.removeAt(i)
+//                     answer+=2
+//                 }
+//             }
+
+//             newList.forEach {
+//                 it.removeAll(listOf(0))
+
+//             }
+
+//         }
