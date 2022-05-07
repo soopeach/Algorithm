@@ -1,0 +1,48 @@
+class Solution {
+    fun solution(board: Array<IntArray>, moves: IntArray): Int {
+        var answer = 0
+        val newList = mutableListOf<ArrayList<Int>>()
+    val basket = mutableListOf<Int>()
+
+    // newList에 보기 좋게 새로 리스트를 만들었음.
+    for (i in 0 until board.size){
+        val tempList= arrayListOf<Int>()
+        for (j in board.size-1 downTo 0){
+            tempList.add(board[j][i])
+        }
+        newList.add(tempList)
+
+    }
+
+    // 0 다 삭제
+    newList.forEach {
+        it.removeAll(listOf(0))
+
+    }
+
+
+    moves.forEach {
+        // 비어있으면 건너뛰기
+        if (newList[it-1].isNullOrEmpty()) return@forEach
+
+        // 인형 뽑기
+        val doll = newList[it-1][newList[it-1].size-1]
+        newList[it-1][newList[it-1].size-1] = 0
+        basket.add(doll)
+        for (i in 0 until basket.size-1){
+            if (basket[i] == basket[i+1]) {
+                basket.removeAt(i+1)
+                basket.removeAt(i)
+                answer+=2
+            }
+        }
+
+        newList.forEach {
+            it.removeAll(listOf(0))
+
+        }
+
+    }
+        return answer
+    }
+}
