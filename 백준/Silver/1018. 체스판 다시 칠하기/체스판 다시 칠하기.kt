@@ -1,22 +1,22 @@
-fun main(){
+fun main() {
     val size = readln().split(" ")
-    val col = size[0].toInt()
-    val row = size[1].toInt()
+    val row = size[0].toInt()
+    val col = size[1].toInt()
     var ans = 64
 
     val board = mutableListOf<String>()
-    repeat(col){
+    repeat(row) {
         var input = readln()
         board.add(input)
     }
-    
-    for(h in 0 .. col-8){
-        
-        for (w in 0 .. row-8){
+
+    for (h in 0..row - 8) {
+
+        for (w in 0..col - 8) {
 
             var newBoard = mutableListOf<String>()
-            board.subList(h, h+8).forEach {
-                newBoard.add(it.substring(w,w+8))
+            board.subList(h, h + 8).forEach {
+                newBoard.add(it.substring(w, w + 8))
             }
 
             if (ans > startWhite(newBoard)) ans = startWhite(newBoard)
@@ -30,7 +30,7 @@ fun main(){
 
 }
 
-fun startWhite(board : MutableList<String>) : Int{
+fun startWhite(board: MutableList<String>): Int {
     val std = arrayOf<String>(
         "WBWBWBWB",
         "BWBWBWBW",
@@ -42,16 +42,17 @@ fun startWhite(board : MutableList<String>) : Int{
         "BWBWBWBW"
     )
     var cnt = 0
-    for (col in 0 until 8){
+    for (row in 0 until 8) {
 
-        for (row in 0 until 8){
-            if (std[col][row] != board[col][row]) cnt++
+        for (col in 0 until 8) {
+            if (std[row][col] != board[row][col]) cnt++
         }
     }
 
     return cnt
 }
-fun startBlack(board : MutableList<String>) : Int{
+
+fun startBlack(board: MutableList<String>): Int {
     val std = arrayOf<String>(
         "BWBWBWBW",
         "WBWBWBWB",
@@ -63,10 +64,10 @@ fun startBlack(board : MutableList<String>) : Int{
         "WBWBWBWB"
     )
     var cnt = 0
-    for (col in 0 until 8){
+    for (row in 0 until 8) {
 
-        for (row in 0 until 8){
-            if (std[col][row] != board[col][row]) cnt++
+        for (col in 0 until 8) {
+            if (std[row][col] != board[row][col]) cnt++
         }
     }
 
