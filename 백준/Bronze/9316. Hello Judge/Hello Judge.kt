@@ -1,0 +1,1 @@
+fun main() {for (cnt in 1 .. readln().toInt()){ println("Hello World, Judge ${cnt}!") } }
