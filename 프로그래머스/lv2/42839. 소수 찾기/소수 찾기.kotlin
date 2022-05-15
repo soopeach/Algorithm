@@ -1,3 +1,4 @@
+import kotlin.math.sqrt
 class Solution {
     val numbersList = mutableListOf<Int>()
     val checkedVisit = BooleanArray(7, { false })
@@ -44,7 +45,7 @@ class Solution {
     fun isPrime(num : Int) : Boolean{
         // 2를 제외한 모든 짝수는 소수가 아님
         if (num != 2 && num % 2 == 0 || num == 1) return false
-        for (no in 2 until num ){
+        for (no in 2 .. sqrt(num.toFloat()).toInt() ){
             if (num % no == 0) return false
         }
 
