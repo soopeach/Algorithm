@@ -15,7 +15,7 @@ fun main() {
 
 fun combination(cnt : Int, depth: Int, beginwith : Int){
     if (cnt == depth){
-        if (sumOfSubsequence(result) == sizeAndCnt[1]) ans++
+        if (result.sum() == sizeAndCnt[1]) ans++
         return
     }
     for (cur in beginwith until num.size){
@@ -23,12 +23,4 @@ fun combination(cnt : Int, depth: Int, beginwith : Int){
         combination(cnt+1, depth, cur +  1)
         result.removeAt(result.lastIndex)
     }
-}
-
-fun sumOfSubsequence(array: MutableList<Int>): Int {
-    var ans = 0
-    array.forEach {
-        ans += it
-    }
-    return ans
 }
