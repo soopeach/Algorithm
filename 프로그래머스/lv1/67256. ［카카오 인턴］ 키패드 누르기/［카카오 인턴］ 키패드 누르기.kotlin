@@ -1,4 +1,3 @@
-import kotlin.math.pow
 class Solution {
     var keyPad = arrayOf<IntArray>(
             intArrayOf(1,2,3),
