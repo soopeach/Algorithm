@@ -10,12 +10,11 @@ fun main() {
     val bw = BufferedWriter(OutputStreamWriter(System.out))
 
     val (N, Q) = br.readLine().split(" ").map { it.toInt() }
-    var arrayB = br.readLine().split(" ").map { it.toInt() }.toIntArray()
+    var arrayB = br.readLine().split(" ").map { it.toInt() }.toIntArray().sortedArray()
     var sumOfB = IntArray(arrayB.size + 1, { 0 }) // 인덱스 계산을 편하게 하기 위해.
 
-    // 정렬 후 누적 합 계산.
-    arrayB.sortedArray().forEachIndexed { index, it ->
-
+    // 정렬 후 누적 합 계산. ex) sumOfB[3]은 arrayB[0] ~ arrayB[2]의 합이 담기게 됨.
+    arrayB.forEachIndexed { index, it ->
         sumOfB[index + 1] = sumOfB[index] + it
 
     }
