@@ -3,7 +3,7 @@ class Solution {
         var answer = 0
         citations.sort()
         
-        for (no in 0 .. citations.maxOf { it }){
+        for (no in 0 .. citations[citations.lastIndex]){
             var quote = 0
             var notQuote = 0
             citations.forEach {
