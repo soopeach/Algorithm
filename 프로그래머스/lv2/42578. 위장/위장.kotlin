@@ -1,6 +1,6 @@
 class Solution {
     fun solution(clothes: Array<Array<String>>): Int {
-        var answer = 1
+        var answer = 0
         val clothesMap = mutableMapOf<String,Int>()
         
         clothes.forEach {
@@ -11,9 +11,8 @@ class Solution {
             }
         }
 
-        clothesMap.forEach {
-            answer *= it.value + 1
-        }
+        answer = clothesMap.map { it.value }.fold(1) {total, next -> total * (next+1) }
+        
         return answer-1
     }
 }
