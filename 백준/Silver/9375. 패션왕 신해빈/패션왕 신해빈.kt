@@ -2,8 +2,8 @@ fun main() {
 
     val cnt = readln().toInt()
     val clothesData = mutableMapOf<String, Int>()
-    
-    repeat(cnt) { cnt ->
+
+    repeat(cnt) {
 
         clothesData.clear()
         repeat(readln().toInt()) {
