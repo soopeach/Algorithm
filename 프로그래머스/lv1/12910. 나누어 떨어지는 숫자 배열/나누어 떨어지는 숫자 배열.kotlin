@@ -1,0 +1,12 @@
+class Solution {
+    fun solution(arr: IntArray, divisor: Int): IntArray {
+        
+        var answer = mutableListOf<Int>()
+        
+        arr.forEach{
+            if(it % divisor == 0) answer.add(it)
+        }
+        
+        return if(answer.size == 0) intArrayOf(-1) else answer.sorted().toIntArray()
+    }
+}
