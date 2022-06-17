@@ -1,0 +1,11 @@
+class Solution {
+    fun solution(x: Int, n: Int): LongArray {
+        val longX = x.toLong()
+        var answer = longArrayOf(longX)
+        
+        (2 .. n).forEach{
+            answer += answer[answer.lastIndex] + longX
+        }
+        return answer
+    }
+}
