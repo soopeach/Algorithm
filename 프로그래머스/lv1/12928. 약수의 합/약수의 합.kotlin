@@ -1,0 +1,7 @@
+class Solution {
+    fun solution(n: Int): Int {
+        var answer = 0  
+        for(no in 1 .. n){ if(n % no == 0) answer += no }
+        return answer
+    }
+}
