@@ -1,0 +1,25 @@
+class Solution {
+    fun solution(num: Int): Int {
+        var curNum : Long = num.toLong()
+        var answer = 0
+
+        while (curNum != 1L){
+            
+            if(curNum % 2L == 0L){
+                curNum /= 2
+                answer++
+                if(answer >= 500){
+                    return -1
+                }
+            } else {
+                curNum *= 3
+                curNum += 1
+                answer++
+                if(answer >= 500){
+                    return -1
+                }
+            }
+        }
+        return answer
+    }
+}
