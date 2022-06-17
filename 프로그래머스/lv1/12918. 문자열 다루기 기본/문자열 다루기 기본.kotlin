@@ -1,0 +1,16 @@
+class Solution {
+    fun solution(s: String): Boolean {
+        
+        var ans = true
+    
+        if (s.length != 4 && s.length != 6) return false 
+        
+        s.forEach{
+            if(!it.isDigit()) {
+                ans = false
+            }
+        }
+        return ans
+    }
+    
+}
