@@ -1,0 +1,37 @@
+class Solution {
+    
+    var answer = 0
+    val pickedList = mutableListOf<Int>()
+    
+    fun solution(nums: IntArray): Int {
+        
+        dfs(0,nums,0)
+        return answer
+    }
+    
+    fun dfs(cnt: Int, nums: IntArray, beginWith: Int){
+        if(cnt == 3){
+            if(isPrime(pickedList.sum())) answer++ 
+            return
+        }
+        for(index in beginWith until nums.size){
+            pickedList.add(nums[index])
+            dfs(cnt+1,nums,index+1)
+            pickedList.removeAt(pickedList.lastIndex)
+        }
+    }
+    
+    fun isPrime(num: Int): Boolean{
+        
+        if (num == 1 || num == 2) return true
+        
+        if(num != 2 && num % 2 == 0) return false
+        
+        for(no in 3 until num){
+            if(num % no == 0) {
+                return false
+            }
+        }
+        return true
+    }
+}
