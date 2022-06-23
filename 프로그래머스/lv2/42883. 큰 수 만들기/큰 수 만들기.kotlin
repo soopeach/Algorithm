@@ -1,0 +1,35 @@
+import java.util.Stack
+
+class Solution {
+    fun solution(number: String, k: Int): String {
+        // 스택(LIFO)
+        val stack = Stack<Int>()
+        // 정답의 길이 = number의 길이 - 제거할 수의 개수
+        val stdLen = number.length - k
+        // 정답이 담길 변수
+        var answer = ""
+        // 지워진 개수
+        var removedCnt = 0
+        
+        number.forEach{
+            val curNum = it - '0'
+
+            while (stack.isNotEmpty()
+                && curNum > stack.peek()
+                && removedCnt < k){
+                stack.pop()
+                removedCnt++
+            }
+            stack.add(curNum)
+
+        }
+    
+        // 길이가 stdLen보다 크다면 뒷부분 잘라주기
+        if(stack.size > stdLen){
+            answer = stack.subList(0, stdLen).joinToString("")
+        } else answer = stack.joinToString("")
+        
+        return answer
+    }
+    
+}
