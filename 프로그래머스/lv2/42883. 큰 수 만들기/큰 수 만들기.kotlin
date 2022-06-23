@@ -11,9 +11,15 @@ class Solution {
         // 지워진 개수
         var removedCnt = 0
         
+        // 앞에 있을수록 수가 커야 더 큰 수 
         number.forEach{
+            
             val curNum = it - '0'
-
+            
+            // 현재 스택이 비어있지 않고,
+            // 현재 탐색하는 수가 지금까지 뽑은 수보다 크고
+            // 아직 숫자를 제거할 기회가 남았다면
+            // stack에서 pop()
             while (stack.isNotEmpty()
                 && curNum > stack.peek()
                 && removedCnt < k){
