@@ -6,12 +6,12 @@ fun main(){
     var minusLoation = -1
     // 연산자들의 위치
     val whereIsOperator = mutableListOf<Int>()
-    // 계산이 되어질 수
+    // 계산이 되어질 수(정답 값)
     var num = 0
 
     expression.forEachIndexed{index, it ->
 
-            // '-' 의 위치
+        // '-' 의 위치
         if (it == '-') {
             if (minusLoation == -1) minusLoation = index
             whereIsOperator.add(index)
@@ -27,11 +27,15 @@ fun main(){
     var lastIndex = 0
     // 연산자를 분리한 순수 숫자
     var dividedNum = 0
+
     // 연산자와 숫자들을 분리하는 작업
-    whereIsOperator.forEachIndexed { index, it ->
-        dividedNum = expression.substring(lastIndex,it).toInt()
-        lastIndex = it+1
-        if (it <= minusLoation || minusLoation == -1){
+    whereIsOperator.forEach {  indexForOperator ->
+
+        dividedNum = expression.substring(lastIndex,indexForOperator).toInt()
+        lastIndex = indexForOperator+1
+
+        // - 이후의 숫자들은 전부 -로 처리
+        if (indexForOperator <= minusLoation || minusLoation == -1){
             num += dividedNum
         } else {
             num -= dividedNum
@@ -47,6 +51,5 @@ fun main(){
     }
 
     println(num)
-
 
 }
