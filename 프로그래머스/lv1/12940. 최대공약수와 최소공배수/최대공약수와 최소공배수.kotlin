@@ -1,0 +1,19 @@
+class Solution {
+    fun solution(n: Int, m: Int): IntArray {
+        var answer = intArrayOf()
+        
+        // 무조건 n이 더 크게 해야함.
+        val a = if(n > m) n else m
+        val b = if(n > m) m else n
+        val gcd = gcd(a, b)
+        
+        answer += gcd
+        answer += (a * b) / gcd
+        return answer
+    }
+    
+    fun gcd(a: Int, b: Int): Int{
+        if(b == 0) return a
+        else return gcd(b, a % b)
+    }
+}
