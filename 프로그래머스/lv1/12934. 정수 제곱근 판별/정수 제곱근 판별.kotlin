@@ -1,0 +1,19 @@
+class Solution {
+    fun solution(n: Long): Long {
+        var answer: Long = 0
+        
+        for(num in 1 .. n){
+            if(num * num > n){
+                answer = -1
+                break
+            }
+            
+            if(num * num == n){
+                answer = (num+1) * (num+1)
+                break
+            }
+        }
+        return answer
+         
+    }
+}
