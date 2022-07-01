@@ -5,17 +5,19 @@ fun main() {
     repeat(t){
 
         val size = readln().toInt()
-        var maximumSubarray = -1000001
+        // 부분수열의 합들 중 최대
+        var sumOfMaximumSubarray = -1000001
+        // 수열
         val array = readln().split(" ").map{ it.toInt() }
 
+        // 부분수열들을 완전 탐색
         for(start in 0 until size){
             for(end in start until size){
-                val subarray = array.subList(start,end+1).sum()
-                if(maximumSubarray < subarray) maximumSubarray = subarray
+                val sumOfSubarray = array.subList(start,end+1).sum()
+                if(sumOfMaximumSubarray < sumOfSubarray) sumOfMaximumSubarray = sumOfSubarray
             }
         }
-
-        println(maximumSubarray)
+        println(sumOfMaximumSubarray)
     }
 }
 
