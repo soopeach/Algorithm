@@ -7,8 +7,5 @@
 */
 
 class Solution {
-    fun solution(s: String): String {
-        val numList = s.split(" ").map{it.toLong()}
-        return "${numList.minOf{it}} ${numList.maxOf{it}}"
-    }
+    fun solution(s: String) = s.split(" ").map{it.toLong()}.let{"${it.minOf{it}} ${it.maxOf{it}}"}
 }
