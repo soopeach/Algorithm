@@ -26,6 +26,12 @@ package hyunsoo.`2week`
  *      - 연속된 R이 홀수면 뒤에서 빼기
  *          - D로 먼저 시작하는 경우 반례가 발생
  *
+ * 성공한 아이디어
+ * - 함수 문자열을 하나하나 순차적으로 탐색하여 R이면 rCnt에 추가
+ * - D라면 rCnt가 짝수인지 홀수인지 여부를 확인하고 앞에서 뺄지 뒤에서 뺄지 결정
+ *      - rCnt가 짝수라면(ex. 2일경우) 뒤집고 뒤집으니 원위치, 따라서 앞에서 빼기
+ *      - rCnt가 홀수라면 뒤에서 빼기
+ * - 앞, 뒤 모두에서 빼야하므로 Deque 자료구조를 사용
  *
  */
 
@@ -33,8 +39,10 @@ package hyunsoo.`2week`
 fun main() {
 
     val t = readln().toInt()
-    var deque = ArrayDeque<String>()
+    val deque = ArrayDeque<String>()
+
     repeat(t) {
+
         deque.clear()
         val funString = readln()
         val cnt = readln().toInt()
@@ -44,9 +52,7 @@ fun main() {
             array.split(",").forEach {
                 deque.addLast(it)
             }
-        } else {
-            deque.addLast(array)
-        }
+        } else deque.addLast(array)
 
         // D의 개수가 숫자의 개수보다 크면 에러
         if (funString.count { it == 'D' } > cnt) {
@@ -54,23 +60,23 @@ fun main() {
             return@repeat
         }
 
-        var sequenceRCnt = 0
-
-        funString.forEachIndexed { index, curChar ->
+        var rCnt = 0
+        funString.forEach { curChar ->
 
             if (curChar == 'D') {
 
-                if (sequenceRCnt % 2 == 0) {
+                if (rCnt % 2 == 0) {
                     deque.removeFirst()
                 } else {
                     deque.removeLast()
                 }
-                
+
             } else if (curChar == 'R') {
-                sequenceRCnt++
+                rCnt++
             }
         }
-        if (sequenceRCnt % 2 != 0) deque.reverse()
+
+        if (rCnt % 2 != 0) deque.reverse()
         println(deque.joinToString(",", "[", "]"))
 
     }
