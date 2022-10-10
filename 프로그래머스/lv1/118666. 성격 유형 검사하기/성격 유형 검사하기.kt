@@ -1,4 +1,4 @@
-val personalityMap = mutableMapOf<Char, Int>(
+val personalityMap = mutableMapOf(
     'R' to 0,
     'C' to 0,
     'J' to 0,
@@ -19,76 +19,50 @@ class Solution {
 
             when (choices[index]) {
                 1 -> {
-                    personalityMap.put(
-                        firPersonality,
-                        personalityMap.getValue(firPersonality) + 3
-                    )
+                    personalityMap[firPersonality] = personalityMap.getValue(firPersonality) + 3
                 }
-
                 2 -> {
-                    personalityMap.put(
-                        firPersonality,
-                        personalityMap.getValue(firPersonality) + 2
-                    )
-
+                    personalityMap[firPersonality] = personalityMap.getValue(firPersonality) + 2
                 }
-
                 3 -> {
-                    personalityMap.put(
-                        firPersonality,
-                        personalityMap.getValue(firPersonality) + 1
-                    )
-
+                    personalityMap[firPersonality] = personalityMap.getValue(firPersonality) + 1
                 }
-
                 5 -> {
-                    personalityMap.put(
-                        secPersonality,
-                        personalityMap.getValue(secPersonality) + 1
-                    )
+                    personalityMap[secPersonality] = personalityMap.getValue(secPersonality) + 1
                 }
-
                 6 -> {
-                    personalityMap.put(
-                        secPersonality,
-                        personalityMap.getValue(secPersonality) + 2
-                    )
+                    personalityMap[secPersonality] = personalityMap.getValue(secPersonality) + 2
                 }
-
                 7 -> {
-                    personalityMap.put(
-                        secPersonality,
-                        personalityMap.getValue(secPersonality) + 3
-                    )
+                    personalityMap[secPersonality] = personalityMap.getValue(secPersonality) + 3
                 }
             }
         }
 
-        if (personalityMap.get('R')!! >= personalityMap.get('T')!!){
-            answer += "R"
-        } else answer += "T"
+        answer += if (personalityMap.getOrDefault('R', 0) >=
+            personalityMap.getOrDefault('T', 0)
+        ) {
+            "R"
+        } else "T"
 
-        if (personalityMap.get('C')!! >= personalityMap.get('F')!!){
-            answer += "C"
-        } else answer += "F"
+        answer += if (personalityMap.getOrDefault('C', 0) >=
+            personalityMap.getOrDefault('F', 0)
+        ) {
+            "C"
+        } else "F"
 
-        if (personalityMap.get('J')!! >= personalityMap.get('M')!!){
-            answer += "J"
-        } else answer += "M"
+        answer += if (personalityMap.getOrDefault('J', 0) >=
+            personalityMap.getOrDefault('M', 0)
+        ) {
+            "J"
+        } else "M"
 
-        if (personalityMap.get('A')!! >= personalityMap.get('N')!!){
-            answer += "A"
-        } else answer += "N"
-        
+        answer += if (personalityMap.getOrDefault('A', 0) >=
+            personalityMap.getOrDefault('N', 0)
+        ) {
+            "A"
+        } else "N"
+
         return answer
     }
-}
-
-fun main() {
-    val testSurvey = arrayOf(
-        "AN", "CF", "MJ", "RT", "NA"
-    )
-    val choices = intArrayOf(5, 3, 2, 7, 5)
-    val test = Solution()
-    test.solution(testSurvey, choices)
 }
