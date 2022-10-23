@@ -22,7 +22,14 @@ import java.util.ArrayDeque
  * - 각 한 방향만으로 깊게 들어가는 것을 안전거리라고 판단했음...
  */
 
-data class CustomPos(val x: Int, val y: Int)
+data class CustomPos(val x: Int, val y: Int) {
+    operator fun plus(pos: CustomPos): CustomPos {
+        return CustomPos(
+            this.x + pos.x,
+            this.y + pos.y
+        )
+    }
+}
 
 // 키보드 기준 4 7 8 9 6 3 2 1
 val directions = listOf(
@@ -52,9 +59,7 @@ fun main() {
     for (x in 0 until n) {
         for (y in 0 until m) {
             if (spaceData[x][y] == 1) findSafeDistance(x, y, visit)
-            visit.forEach {
-                it.fill(false)
-            }
+            visit.fillWithFalse()
         }
     }
     spaceData.maxOf { rowList ->
@@ -75,7 +80,7 @@ fun findSafeDistance(x: Int, y: Int, visit: Array<BooleanArray>) {
             // 범위 유효성 검사 && 상어 아닌 곳 탐색
             if (nextPos.x in 0 until spaceData.size &&
                 nextPos.y in 0 until spaceData.first().size &&
-                spaceData[nextPos.x][nextPos.y] != -1
+                spaceData[nextPos.x][nextPos.y] != 1
             ) {
                 // 방문하지 않은 곳이라면 탐색
                 if (visit[nextPos.x][nextPos.y].not()) {
@@ -91,15 +96,13 @@ fun findSafeDistance(x: Int, y: Int, visit: Array<BooleanArray>) {
                 visit[nextPos.x][nextPos.y] = true
             }
 
-
         }
 
     }
 }
 
-operator fun CustomPos.plus(pos: CustomPos): CustomPos {
-    return CustomPos(
-        this.x + pos.x,
-        this.y + pos.y
-    )
+fun Array<BooleanArray>.fillWithFalse() {
+    this.forEach {
+        it.fill(false)
+    }
 }
