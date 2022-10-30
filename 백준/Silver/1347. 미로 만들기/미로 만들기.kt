@@ -1,5 +1,7 @@
 package hyunsoo.`7week`
 
+import kotlin.math.absoluteValue
+
 /**
  * <문제>
  * [미로 만들기](https://www.acmicpc.net/problem/1347)
@@ -54,7 +56,7 @@ class Hyunsoo {
 
     fun getVisitedList() = visitedList.toList()
 
-    fun getMapSize() = visitedList.maxOf { it.comparator() } + moveCnt
+    fun getMapSize() = visitedList.minOf { it.comparator() }
 }
 
 data class Position(val x: Int, val y: Int) {
@@ -67,7 +69,7 @@ data class Position(val x: Int, val y: Int) {
     }
 
     fun comparator(): Int =
-        if (this.x > this.y) this.x else this.y
+        if (this.x < this.y) this.x else this.y
 
 }
 
@@ -99,9 +101,9 @@ fun main() {
         }
     }
 
-    val mapSize = hyunsoo.getMapSize()
-    val mapData = Array(1000) {
-        Array(1000) { "#" }
+    val mapSize = hyunsoo.getMapSize().absoluteValue
+    val mapData = Array(51) {
+        Array(51) { "#" }
     }
 
     var startXIndex = Int.MAX_VALUE
