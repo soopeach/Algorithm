@@ -54,10 +54,9 @@ fun main() {
     storageSize +=
         if (heightMaxLeftIndex == heightMaxRightIndex) heightMax
         else heightMax *
-            (pillarList[heightMaxRightIndex].location - pillarList[heightMaxLeftIndex].location + 1)
+                (pillarList[heightMaxRightIndex].location - pillarList[heightMaxLeftIndex].location + 1)
 
     var rightCursor = heightMaxRightIndex
-    var rightMaxHeight = heightMax
 
     // 오른쪽 탐색
     while (rightCursor < pillarList.lastIndex) {
@@ -66,9 +65,7 @@ fun main() {
             .filter {
                 it.location > pillarList[rightCursor].location
             }.maxOf { it.height }
-            .apply {
-                rightMaxHeight = this
-            }
+
         // 갱신된 최댓값 이후의 최댓값의 인덱스(오른쪽)
         val rightSideMaxHeightIndex = pillarList
             .indexOfLast { it.height == rightSideMaxHeight }
@@ -82,7 +79,6 @@ fun main() {
     }
 
     var leftCursor = heightMaxLeftIndex
-    var leftMaxHeight = heightMax
 
     // 왼쪽 탐색
     while (leftCursor > 0) {
