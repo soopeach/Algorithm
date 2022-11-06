@@ -1,12 +1,22 @@
 package hyunsoo.`8week`
 
 /**
+ * <문제>
+ * [단축키 지정](https://www.acmicpc.net/problem/1283)
+ * 
  * N개의 옵션이 존재.
  * 위에서부터 차례대로 각 옵션에 단축키를 의미하는 대표 알파벳을 지정함.
  * - 왼쪽부터 오른쪽으로 단어들의 첫 글자를 순차 탐색. 만약 해당 알파벳이 단축키로 지정되어있지 않으면 단축키로 등록
  * - 모든 단어의 첫 글자가 이미 지정되어있다면, 알파벳을 기준으로 순차탐색
  * - 다 안되면 그냥 냅두기
- *
+ * 
+ * 이슈
+ * - 아니..... 공백이 입력으로 들어오면 어떡해?...
+ * 4
+ * a b
+ * b c
+ * a c
+ * a b c
  *
  */
 
@@ -53,7 +63,6 @@ fun checkWord(option: String) {
 fun checkAlphabet(option: String) {
     var isOptioned = false
     val shortCutCommand = mutableListOf<String>()
-    val wordList = option.split(" ")
 
     option.forEachIndexed { index, alphabet ->
         if (isOptioned.not() &&
@@ -71,11 +80,6 @@ fun checkAlphabet(option: String) {
     } else {
         println(option)
     }
-}
-
-fun makeShortcutWord(word: String, option: Char): String {
-    val shortcutIndex = word.indexOf(option)
-    return word.toShortCut(shortcutIndex)
 }
 
 fun String.toShortCut(index: Int): String {
