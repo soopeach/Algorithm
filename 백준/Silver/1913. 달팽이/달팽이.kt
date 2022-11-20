@@ -1,5 +1,10 @@
 package hyunsoo.`10week`
 
+/**
+ * <문제>
+ * [달팽이](https://www.acmicpc.net/problem/1913)
+ */
+
 // 하 우 좌 상
 val dirList = listOf(
     Pair(1, 0),
@@ -35,10 +40,11 @@ fun main() {
             x += dx
             y += dy
             snail[x][y] = num--
-            if (num == 0) showSnailAndGetTargetCoordinate()
         }
         curDir = (curDir + 1) % 4
     }
+
+    showSnailAndGetTargetCoordinate()
 
 }
 
@@ -54,7 +60,5 @@ fun showSnailAndGetTargetCoordinate() {
             }
         }
     }
-
-    System.exit(0)
 
 }
