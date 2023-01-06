@@ -17,6 +17,16 @@ data class Node<T>(
     var right: Node<T>? = null,
 )
 
+fun <T> setNode(node: Node<T>, leftData: T, rightData: T) {
+
+    if (leftData != ".") {
+        node.left = Node(leftData)
+    }
+    if (rightData != ".") {
+        node.right = Node(rightData)
+    }
+}
+
 fun <T> findNode(node: Node<T>, targetData: String): Node<T> {
 
     if (node.data == targetData) {
@@ -24,16 +34,16 @@ fun <T> findNode(node: Node<T>, targetData: String): Node<T> {
     }
 
     node.left?.let { leftNode ->
-        val leftNode = findNode(leftNode, targetData)
-        if (leftNode.data == targetData) {
-            return leftNode
+        val foundLeftNode = findNode(leftNode, targetData)
+        if (foundLeftNode.data == targetData) {
+            return foundLeftNode
         }
     }
 
     node.right?.let { rightNode ->
-        val rightNode = findNode(rightNode, targetData)
-        if (rightNode.data == targetData) {
-            return rightNode
+        val foundRightNode = findNode(rightNode, targetData)
+        if (foundRightNode.data == targetData) {
+            return foundRightNode
         }
     }
 
@@ -81,14 +91,7 @@ fun main() {
     val (rootData, rootLeftData, rootRightData) = readln().split(" ")
 
     root.data = rootData
-    if (rootLeftData != ".") {
-        root.left = Node(rootLeftData)
-    }
-    if (rootRightData != ".") {
-        root.right = Node(rootRightData)
-    }
-
-
+    setNode(root, rootLeftData, rootRightData)
 
     repeat(dataCnt - 1) {
 
@@ -96,12 +99,8 @@ fun main() {
 
         val targetNode = findNode(root, parent)
 
-        if (leftData != ".") {
-            targetNode.left = Node(leftData)
-        }
-        if (rightData != ".") {
-            targetNode.right = Node(rightData)
-        }
+        setNode(targetNode, leftData, rightData)
+
     }
 
     preOrder(root)
