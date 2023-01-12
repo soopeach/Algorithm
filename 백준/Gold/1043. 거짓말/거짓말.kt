@@ -1,92 +1,80 @@
-package hyunsoo.`1week`
+package hyunsoo.`18week`
 
 /**
  *
- * 입/출력
- * - 첫째 줄에 사람의 수 N과 파티의 수 M이 주어짐
- * - 둘째 줄에는 이야기의 진실을 아는 사람의 수와 번호가 주어짐
- *      - 진실을 아는 사람의 수가 먼저 주어지고 그 개수만큼 사람들의 번호가 주어짐
- * - 셋째 줄부터 M개의 줄에는 각 파티마다 오는 사람의 수와 번호가 같은 방식으로 주어짐
+ * <문제>
+ * [거짓말](https://www.acmicpc.net/problem/1043)
+ * 거짓말쟁이 지민이...
  *
- * 아이디어
- * - 진실을 아는 사람들 목록 + 연관된 사람들을 확인하고
- * - 이 사람들이 있는 파티에서는 진실을 말해야하는 것으로 판단
- * - 모든 파티를 탐색하여 진실을 아는 사람과 겹치는 사람은 진실을 아는 사람으로 판단.
- *      - 골드치고는 너무 간단하다 생각을 하긴했지만... 역시나 틀렸다.
- *      - 위와 같은 방식으로는 이미 진실을 말했다고 생각한 파티가 잘못된 것을 수정할 수 없음.
- *      즉, 사실을 들었던 사람이 거짓말을 들었던 사람에게 알려줄 수 있는 것에 대한 처리를 못함.
- *      - 3 3
- *        1 3
- *        1 1
- *        2 1 2
- *        2 2 3
- *        의 케이스와 같은 경우에 오답 발생
- *        정답 = 0 / 내답 = 1
+ * 진실을 아는 사람이 포함된 곳에서는 거짓말 하지 않기.
+ * 진실을 말하게 된다면 거기에 있는 사람들 모두 진실을 아는 사람들이 된다..!
  *
- * 그래서!
- * - 유니온 파인드를 사용하자
- * - 부모가 0이면 진실을 아는 사람과 연관이 되어있다는 뜻
+ * - 아이디어
+ * 서로소 집합 자료구조를 사용했음.
+ * 부모가 0이라면 진실을 아는 사람
+ *
+ * - 트러블 슈팅
+ * 처음에는 그냥 집합을 사용해서 순차탐색하며 진실을 아는 사람의 포함여부로 거짓말가능 여부를 판단하려했음.
+ * 거짓말을 듣고 후에 진실을 들을 수도 있게 되니까 해당 방법으로는 불가능
+ *
+ *
+ * 진실을 아는 사람들과 겹치면 모두 진실을 아는 사람이 된다..!
+ * 진실을 아는 사람을 먼저 판단 후 파티정보를 순회하며 거짓말 여부 판단하기!!
+ * 연결의 연결의 연결된 사람은 감지하지 못해서 틀림.
+ * -- DFS혹은 서로소 집합을 사용하기
  *
  */
 
 fun main() {
 
-    val (n, m) = readln().split(" ").map { it.toInt() }
+    val (peopleCnt, partyCnt) = readln().split(" ").map { it.toInt() }
+    val parent = IntArray(peopleCnt + 1) { it }
+    var lieCnt = 0
+
+    readln().split(" ").map { it.toInt() }.drop(1).forEach { knowTruth ->
+        parent[knowTruth] = 0
+    }
 
     val partyInfoList = mutableListOf<List<Int>>()
-    val knowTruthList = mutableSetOf<Int>()
-    val knowTruth = readln()
-    var canLieCnt = 0
-    var peopleParentList = (0..n + 1).toMutableList()
 
-    // 진실을 아는 사람이 없을 경우
-    if (knowTruth == "0") {
-        println(m)
-        return
-    } else {
-        knowTruth.trim().split(" ").map { it.toInt() }
-            .drop(1).forEach {
-                peopleParentList[it] = 0
-            }
-    }
+    repeat(partyCnt) {
 
-    repeat(m) {
+        val partyInfo = readln().split(" ").map { it.toInt() }.drop(1)
 
-        val partyInfo = readln().trim().split(" ").map { it.toInt() }.drop(1)
         partyInfoList.add(partyInfo)
 
-        partyInfo.drop(1).forEach {
-            unionParent(peopleParentList, partyInfo.first(), it)
-        }
-
-    }
-
-    partyInfoList.forEach { partyInfo ->
-        var canLie = true
-
-        partyInfo.forEach {
-            if (findParent(peopleParentList, it) == 0) {
-                canLie = false
-                return@forEach
+        for (i in partyInfo.indices) {
+            for (j in i + 1 until partyInfo.size) {
+                val targetA = parent[partyInfo[i]]
+                val targetB = parent[partyInfo[j]]
+                union(parent, targetA, targetB)
             }
         }
 
-        if (canLie) canLieCnt++
     }
 
-    println(canLieCnt)
+    partyInfoList.forEach infoListLoop@{ partyInfo ->
+        partyInfo.forEach { people ->
+            if (findParent(parent, people) == 0) return@infoListLoop
+        }
+        lieCnt++
+    }
 
+    println(lieCnt)
 }
 
-fun unionParent(parent: MutableList<Int>, a: Int, b: Int) {
-
-    val aParent = findParent(parent, a)
-    val bParent = findParent(parent, b)
-    if (aParent > bParent) parent[aParent] = bParent
-    else parent[bParent] = aParent
+fun findParent(parent: IntArray, target: Int): Int {
+    if (parent[target] != target)
+        return findParent(parent, parent[target])
+    return target
 }
 
-fun findParent(parent: MutableList<Int>, a: Int): Int {
-    if (parent[a] == a) return parent[a]
-    return findParent(parent, parent[a])
+fun union(parent: IntArray, targetA: Int, targetB: Int) {
+    val aParent = findParent(parent, targetA)
+    val bParent = findParent(parent, targetB)
+    if (aParent < bParent) {
+        parent[bParent] = aParent
+    } else {
+        parent[aParent] = bParent
+    }
 }
