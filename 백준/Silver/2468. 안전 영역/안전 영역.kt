@@ -1,64 +1,125 @@
-fun main() {
+package hyunsoo.`20week`
 
-    // 지역의 높이 정보의 크기
-    val size = readln().toInt()
-    // 지역의 높이 정보 - 2차원 리스트로
-    val localHeight = mutableListOf<MutableList<Int>>()
-    // 안전지역의 개수
-    var safeZone = 1
+/**
+ *
+ * <문제>
+ * [안전 영역](https://www.acmicpc.net/problem/2468)
+ *
+ * - 아이디어
+ * DFS / BFS인데
+ * DFS로 풀어봐야징
+ *
+ * 최소 높이 - 1(아무 곳도 잠기지 않는 경우) 와 최대 높이까지 잠겼을 때를 DFS로 탐색하자.
+ * - 비에 잠기는 높이별로 이차원 배열을 깊은 복사하여 관리한다.
+ *
+ * - 트러블 슈팅
+ *
+ */
+class `전현수_안전_영역` {
 
-    // 지역의 높이 정보를 입력 받음
-    repeat(size) {
-        val data = readln().split(" ").map { it.toInt() }.toMutableList()
-        localHeight.add(data)
+    private val zoneData = mutableListOf<List<Int>>()
+
+    private data class Position(val x: Int, val y: Int)
+
+    // 상 하 좌 우
+    private val dirs = listOf(
+        Position(-1, 0),
+        Position(1, 0),
+        Position(0, -1),
+        Position(0, 1)
+    )
+
+    private val dx = listOf(-1, 1, 0, 0)
+    private val dy = listOf(0, 0, -1, 1)
+
+    fun solution() {
+
+        val size = readln().toInt()
+        val safeZoneCounts = mutableListOf<Int>()
+
+        repeat(size) {
+            zoneData.add(
+                readln().split(" ").map { it.toInt() }.toList()
+            )
+        }
+
+        val (minZoneHeight, maxZoneHeight) = getMinAndMax(zoneData)
+
+        for (rainHeight in minZoneHeight - 1..maxZoneHeight) {
+            val safeZoneData = getSafeZoneData(rainHeight)
+            val safeZoneCnt = countSafeZone(safeZoneData)
+            safeZoneCounts.add(safeZoneCnt)
+        }
+
+        println(safeZoneCounts.maxOf { it })
+
     }
 
-    // 지역의 높이 정보들 중 최대 높이
-    var maxHeight = localHeight.maxOf { it.maxOf { it } }
-    // 지역의 높이 정보들 중 최소 높이
-    var minHeight = localHeight.minOf { it.minOf { it } }
+    private fun countSafeZone(safeZone: List<MutableList<Int>>): Int {
+        var safeZoneCnt = 0
 
-    // 안전한 영역의 최대 개수를 구하기
-    for (standardHeight in minHeight..maxHeight) {
-        var curAns = 0
-        val clone = cloneGraph(localHeight)
-        for (x in 0 until size) {
-            for (y in 0 until size) {
-
-                if (dfs(x, y, standardHeight, clone) == true) curAns++
+        for (i in safeZone.indices) {
+            for (j in safeZone.indices) {
+                if (dfs(i, j, safeZone)) safeZoneCnt++
             }
         }
-        if (curAns > safeZone) safeZone = curAns
+
+        return safeZoneCnt
     }
-    println(safeZone)
-}
 
-fun dfs(x: Int, y: Int, standardHeight: Int, graph: MutableList<MutableList<Int>>): Boolean {
+    private fun dfs(x: Int, y: Int, safeZone: List<MutableList<Int>>): Boolean {
 
-    // 범위를 넘어가면 탈출
-    if (x < 0 || x >= graph.size || y < 0 || y >= graph.size) return false
+        if (safeZone[x][y] == 0) return false
 
-    // 기준 높이보다 작거나 같으면 탈출
-    if (graph[x][y] <= standardHeight) return false
+        safeZone[x][y] = 0
 
-    graph[x][y] = standardHeight
+        dirs.forEach { nextPos ->
 
-    dfs(x + 1, y, standardHeight, graph)
-    dfs(x, y + 1, standardHeight, graph)
-    dfs(x - 1, y, standardHeight, graph)
-    dfs(x, y - 1, standardHeight, graph)
+            val nx = x + nextPos.x
+            val ny = y + nextPos.y
 
-    return true
-}
+            if (nx in safeZone.indices && ny in safeZone.indices) {
+                dfs(nx, ny, safeZone)
+            }
+        }
 
-fun cloneGraph(graph: MutableList<MutableList<Int>>): MutableList<MutableList<Int>> {
-    var clonegraph = Array<IntArray>(graph.size, { IntArray(graph.size, { 0 }) })
+        return true
 
-    graph.forEachIndexed { i, width ->
-        width.forEachIndexed { j, data ->
-            clonegraph[i][j] = data
+    }
+
+    private fun getMinAndMax(targetData: List<List<Int>>): Pair<Int, Int> {
+        var min = 0
+        var max = 101
+
+        for (i in targetData.indices) {
+            for (j in targetData.indices) {
+
+                val curValue = targetData[i][j]
+
+                if (curValue < min) min = curValue
+                if (max < curValue) max = curValue
+            }
+        }
+
+        return Pair(min, max)
+    }
+
+    private fun getSafeZoneData(rainHeight: Int): List<MutableList<Int>> {
+        return zoneData.deepCopy().map { list ->
+            list.map { zoneHeight -> if (zoneHeight <= rainHeight) 0 else zoneHeight }
+                .toMutableList()
         }
     }
-    return clonegraph.map { it.toMutableList() }.toMutableList()
+
+    private fun <T> Collection<Collection<T>>.deepCopy(): List<List<T>> {
+        val deepCopiedList = mutableListOf<List<T>>()
+        this.forEach { list ->
+            deepCopiedList.add(list.toList())
+        }
+        return deepCopiedList
+    }
 }
 
+fun main() {
+    전현수_안전_영역().solution()
+}
