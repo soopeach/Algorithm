@@ -16,6 +16,8 @@ import java.io.OutputStreamWriter
  *
  * - 전체 NodeData 세팅 후 SubTree 세팅을 따로 해줬더니 시간초과 발생
  * - 인접 행렬은 메모리 초과
+ * - 중복을 피하기 위하여 connectedParentList라는 리스트를 만들고 contain을 사용해서 확인했는데 여기서 시간이 오래 걸린 듯
+ *   - 아예 이미 처리한 노드(부모) 자식에서 remove 하도록 만들었음.
  */
 class `전현수_트리와_쿼리` {
 
