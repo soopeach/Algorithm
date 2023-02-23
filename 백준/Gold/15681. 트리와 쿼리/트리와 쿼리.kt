@@ -24,9 +24,6 @@ class `전현수_트리와_쿼리` {
     private val br = BufferedReader(InputStreamReader(System.`in`))
     private val bw = BufferedWriter(OutputStreamWriter(System.out))
 
-    // 부모로 연결이 된 노드의 번호를 저장
-    private val connectedParentList = mutableListOf<Int>()
-
     // 입력으로 주어지는 기본 트리의 정보를 인접리스트로 저장
     private lateinit var myTree: Array<MutableList<Int>>
 
@@ -62,10 +59,9 @@ class `전현수_트리와_쿼리` {
 
     private fun setSubtreeCnt(targetNode: Int) {
 
-        connectedParentList.add(targetNode)
-
         myTree[targetNode].forEach { childNode ->
 
+            // 중복 재귀를 막기 위하여 자식의 연결 리스트에서 부모를 삭제
             myTree[childNode].remove(targetNode)
 
             // 자식으로 재귀
