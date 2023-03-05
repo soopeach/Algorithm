@@ -10,14 +10,14 @@ import kotlin.math.absoluteValue
  * - 아이디어
  * 배열을 활용해서 절댓값 힙을 구현해보자!
  * - 트러블 슈팅
- *
+ * 하... 중간에 변수명은 absoluteValue로 해놓고 실제로는 absoluteValue 처리를 안해놔서 3시간 고생...
  */
 class `전현수_절댓값_힙` {
 
     class AbsoluteValueMinHeap(val size: Int) {
 
         private var lastNodePos = 0
-        val elements = IntArray(size + 1) {
+        private val elements = IntArray(size + 1) {
             EMPTY_VALUE
         }
 
@@ -81,15 +81,12 @@ class `전현수_절댓값_힙` {
                     val curValue = elements[curPosition]
                     val smallerChildValue = elements[smallerAbsoluteValueChildPosition]
 
-                    if (smallerChildValue < curValue) {
-                        elements.swap(curPosition, smallerAbsoluteValueChildPosition)
-                        curPosition = smallerAbsoluteValueChildPosition
-                    } else break
+                    if (curValue <= smallerChildValue) break
 
-                } else {
-                    elements.swap(curPosition, smallerAbsoluteValueChildPosition)
-                    curPosition = smallerAbsoluteValueChildPosition
                 }
+
+                elements.swap(curPosition, smallerAbsoluteValueChildPosition)
+                curPosition = smallerAbsoluteValueChildPosition
 
             }
         }
@@ -135,7 +132,10 @@ class `전현수_절댓값_힙` {
 
         private fun isEmpty() = lastNodePos == 0
 
-
+        companion object {
+            private const val EMPTY_VALUE = 0
+            private const val ROOT = 1
+        }
     }
 
 
@@ -160,9 +160,7 @@ class `전현수_절댓값_힙` {
     }
 
     companion object {
-        private const val EMPTY_VALUE = 0
         private const val COMMAND_POP = 0
-        private const val ROOT = 1
     }
 }
 
