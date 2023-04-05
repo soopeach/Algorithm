@@ -62,15 +62,12 @@ class `전현수_경로_찾기` {
 
             if (visited[curPath.start][curPath.end]) continue
 
-            if (graphData[curPath.start][curPath.end] == CAN) {
+            visited[curPath.start][curPath.end] = true
 
-                visited[curPath.start][curPath.end] = true
+            if (curPath.end == target) return true
 
-                if (curPath.end == target) return true
-
-                graphData[curPath.end].forEachIndexed { index, value ->
-                    if (value == CAN) queue.add(Path(curPath.end, index))
-                }
+            graphData[curPath.end].forEachIndexed { index, value ->
+                if (value == CAN) queue.add(Path(curPath.end, index))
             }
         }
 
