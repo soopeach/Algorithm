@@ -7,11 +7,6 @@ package hyunsoo.`30week`
  *
  * - 아이디어
  *
- * 1번 테트로미노는 원본 + 우측 90도 회전
- * 2번 테트로미노는 원본
- * 3번 테트로미노는 원본 + 3번의 90도 회전
- * 4번 테트로미노는 원본 + 우측 90도 회전
- * 5번 테트로미노는 원본 + 4번의 90도 회전
  *
  * - 트러블 슈팅
  *
@@ -62,13 +57,14 @@ class `전현수_테트로미노` {
 
         for (i in 0 until row) {
             for (j in 0 until column) {
+
+                val curPos = Position(i, j)
+
                 visited[i][j] = true
-                checkTetromino(Position(i, j), board[i][j])
+                checkTetromino(curPos, board[i][j])
                 visited[i][j] = false
-                checkFirst(Position(i, j))
-                checkSecond(Position(i, j))
-                checkThird(Position(i, j))
-                checkFourth(Position(i, j))
+                checkLastTetromino(curPos)
+
             }
         }
 
@@ -98,6 +94,13 @@ class `전현수_테트로미노` {
 
 
         }
+    }
+
+    private fun checkLastTetromino(curPos: Position) {
+        checkFirst(curPos)
+        checkSecond(curPos)
+        checkThird(curPos)
+        checkFourth(curPos)
     }
 
     private fun checkFirst(curPos: Position) {
