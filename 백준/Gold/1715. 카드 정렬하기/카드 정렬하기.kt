@@ -16,10 +16,7 @@ class `전현수_카드_정렬하기` {
 
     fun solution() {
 
-
         val priorityQueue = PriorityQueue<Int>()
-
-        var previousSum = 0
         var answer = 0
 
         repeat(readln().toInt()) {
@@ -28,9 +25,7 @@ class `전현수_카드_정렬하기` {
 
         while (priorityQueue.size >= 2) {
 
-            val (previous, current) = priorityQueue.pollTwice()
-
-            val sum = previous + current
+            val sum = priorityQueue.pollTwice().sum()
             answer += sum
 
             priorityQueue.add(sum)
@@ -40,9 +35,10 @@ class `전현수_카드_정렬하기` {
 
     }
 
-    private fun <T> PriorityQueue<T>.pollTwice(): Pair<T, T> {
-        return Pair(this.poll(), this.poll())
+    private fun <T> PriorityQueue<T>.pollTwice(): List<T> {
+        return List(2) { this.poll() }
     }
+
 }
 
 fun main() {
