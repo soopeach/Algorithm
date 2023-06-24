@@ -15,8 +15,8 @@ import kotlin.system.exitProcess
 class `전현수_로봇_시물레이션` {
 
     private val robotList = mutableListOf<Robot>()
-    private var column = 0
-    private var row = 0
+    private var width = 0
+    private var height = 0
 
     private data class Position(val x: Int, val y: Int) {
 
@@ -74,8 +74,8 @@ class `전현수_로봇_시물레이션` {
                     crashWithRobot(targetRobot.name)
                 }
 
-            if (nextPosition.x !in 1..column ||
-                nextPosition.y !in 1..row
+            if (nextPosition.x !in 1..width ||
+                nextPosition.y !in 1..height
             ) crashWithWall()
 
             _position = nextPosition
@@ -104,8 +104,8 @@ class `전현수_로봇_시물레이션` {
     fun solution() {
 
         readln().split(" ").map { it.toInt() }.apply {
-            column = first()
-            row = last()
+            width = first()
+            height = last()
         }
 
         val (robotCnt, commandCnt) = readln().split(" ").map { it.toInt() }
