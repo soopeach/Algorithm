@@ -77,11 +77,6 @@ class `전현수_주차장` {
             }
         }
 
-        parkingLot.forEachIndexed { index, carNum ->
-            if (index == 0 || carNum == 0) return@forEachIndexed
-            totalFee += priceInfo[index] * weightInfo[carNum]
-        }
-
         println(totalFee)
 
     }
