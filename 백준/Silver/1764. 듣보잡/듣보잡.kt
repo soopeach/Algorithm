@@ -11,7 +11,7 @@ fun main() {
     // 보도 못한 사람
     val neverSeen = HashMap<String, Boolean>()
     // 듣보잡 = 듣도 보도 못한 사람
-    val neverHeardAndSeen = mutableListOf<String>()
+    val neverHeardAndNeverSeen = mutableListOf<String>()
 
     // 듣도 못한 사람, 보도 못한 사람의 수를 공백으로 입력받음.
     val cnt = br.readLine()!!.split(" ")
@@ -37,7 +37,7 @@ fun main() {
         // 듣도 못한 사람에 속해있는지 확인하고 속해있다면
         // 듣도 보도 못한 사람에 추가
         neverSeen.forEach {
-            if(neverHeard.get("${it.key}") == true) neverHeardAndSeen.add("${it.key}")
+            if(neverHeard.get("${it.key}") == true) neverHeardAndNeverSeen.add("${it.key}")
         }
     } else {
         // 듣도 못한 사람이 더 많거나 같다면
@@ -45,15 +45,15 @@ fun main() {
         // 보도 못한 사람에 속해있는지 확인하고 속해있다면
         // 듣도 보도 못한 사람에 추가
         neverHeard.forEach {
-            if(neverSeen.get("${it.key}") == true) neverHeardAndSeen.add("${it.key}")
+            if(neverSeen.get("${it.key}") == true) neverHeardAndNeverSeen.add("${it.key}")
         }
     }
 
     // 듣도 보도 못한 사람의 수를 출력
-    bw.write("${neverHeardAndSeen.size}\n")
+    bw.write("${neverHeardAndNeverSeen.size}\n")
     // 듣도 보도 못한 사람을 사전순으로 정렬 후 출력
-    neverHeardAndSeen.sort()
-    neverHeardAndSeen.forEach {
+    neverHeardAndNeverSeen.sort()
+    neverHeardAndNeverSeen.forEach {
         bw.write("$it\n")
     }
     bw.flush()
