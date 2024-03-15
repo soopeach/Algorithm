@@ -4,7 +4,7 @@
 
 ### 성능 요약
 
-메모리: 26828 KB, 시간: 204 ms
+메모리: 26796 KB, 시간: 204 ms
 
 ### 분류
 
@@ -12,7 +12,7 @@
 
 ### 제출 일자
 
-2024년 3월 12일 11:17:11
+2024년 3월 15일 17:50:09
 
 ### 문제 설명
 
@@ -27,10 +27,10 @@
 <table class="table table-bordered td-center">
 	<tbody>
 		<tr>
-			<td><img alt="" src="https://upload.acmicpc.net/6d8780d5-1e33-4ce5-8a5f-6e02c43e1010/-/preview/"></td>
-			<td><img alt="" src="https://upload.acmicpc.net/899fae0a-ff1c-46aa-93e4-bbb84edd33d0/-/preview/"></td>
-			<td><img alt="" src="https://upload.acmicpc.net/9106a1a5-d7e5-49f0-82fb-9eaa5eff4482/-/preview/"></td>
-			<td><img alt="" src="https://upload.acmicpc.net/50f5e9ef-1cae-4add-a7ea-9ffe965d9823/-/preview/"></td>
+			<td><img alt="" src=""></td>
+			<td><img alt="" src=""></td>
+			<td><img alt="" src=""></td>
+			<td><img alt="" src=""></td>
 		</tr>
 		<tr>
 			<td>(a) 백신을 놓기 전</td>
