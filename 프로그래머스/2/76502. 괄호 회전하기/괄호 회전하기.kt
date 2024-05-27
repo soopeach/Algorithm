@@ -48,7 +48,7 @@ class Solution {
             }
         }
         
-        return if (stack.isEmpty()) true else false
+        return stack.isEmpty()
         
     }
 }
